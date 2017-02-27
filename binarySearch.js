@@ -1,3 +1,6 @@
+a = [3, 8, 10, 20, 40, 50]
+
+
 function binarySeach( sortedValues, target) {
 
 
@@ -39,3 +42,5 @@ function binarySeach( sortedValues, target) {
 // the array.
 return search(0, sortedValues.length-1);
 }
+
+
