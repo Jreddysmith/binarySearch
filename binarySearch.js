@@ -1,46 +1,87 @@
-a = [3, 8, 10, 20, 40, 50]
-
-
-function binarySeach( sortedValues, target) {
-
-
-	//if the low index is greater than the high index,
-	// return null for not-found.
-	function search(low, high) {
-		if ( low > high) {
-			return null;
-		}
-
-
-	//if the value at the low index is our target, return 
-	//the low index.
-		if (sortedValues[low] === target) {
-			return low;
-		}
-
-	//If the value at the high index is our target, return 
-	// the high index.
-
-		if (sortedValues[high] === target) {
-			return high;
-		}
-
-		//Find the middle index and median element.
-
-		var middle = Math.floor( (low + high) / 2);
-		var middleElement = sortedValues[middle];
-
-		if (middleElement > target) {
-			return search(low+1, middle);
-		} else if (middleElement < target) {
-			return search(middle, high-1);
-		}
-		// If middleElement === target, we can return that value.
-		return middle;
-	}
-//Start our search between the first and last element of 
-// the array.
-return search(0, sortedValues.length-1);
+function Node(val) {
+	this.value = val;
+	this.left = null;
+	this.right = null;
 }
 
+function BinarySearchTree() {
+	this.root = null;
+}
 
+BinarySearchTree.prototype.push = function (val) {
+	var root = this.root;
+
+	if(!root) {
+		this.root = new Node(val);
+		return;
+	}
+
+	var currentNode = root;
+	var newNode = new Node(val);
+
+	while(currentNode) {
+		if(val < currentNode.value) {
+			if(!currentNode.left) {
+				currentNode.left = newNode;
+				break;
+			} else {
+				currentNode = currentNode.left;
+			}
+		}else {
+			if(!currentNode.right) {
+				currentNode.right = newNode;
+				break;
+			} else {
+				currentNode = currentNode.right;
+			}
+		}
+	}
+}
+
+function height(node) {
+	if(!node) { 
+		return -1;
+	}
+	var leftHeight = height(node.left);
+	var rightHeight = height(node.right);
+
+	return Math.max(leftHeight, rightHeight) + 1;
+}
+
+// function find(node) {
+// 	if(node) {
+// 		console.log(node.value);
+// 		find(node.left);
+// 		find(node.right);
+// 	}
+// }
+
+BinarySearchTree.prototype.find = function(data) {
+  	var current = this.root;
+  
+	  while(current) {
+	    if(data === current.value) {
+	      return true;
+	    }
+		    if(data < current.value) {
+		      current = current.left;
+		    } else {
+		      current = current.right;
+		    }
+	    }
+  	return false;
+};
+
+
+var bst = new BinarySearchTree();
+bst.push(42);
+bst.push(30);
+bst.push(12);
+bst.push(37);
+bst.push(37);
+bst.push(100);
+bst.push(90);
+console.log(bst.find(1));
+// console.log(find(bst.root));
+console.log(height(bst.root));
+console.log(bst);
